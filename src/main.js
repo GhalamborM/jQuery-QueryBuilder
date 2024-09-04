@@ -121,8 +121,8 @@ var QueryBuilder = function($el, options) {
         if (!this.templates[tpl]) {
             this.templates[tpl] = QueryBuilder.templates[tpl];
         }
-        if (typeof this.templates[tpl] == 'string') {
-            this.templates[tpl] = doT.template(this.templates[tpl]);
+        if (typeof this.templates[tpl] !== 'function') {
+            throw new Error(`Template ${tpl} must be a function`);
         }
     }, this);
 
@@ -134,7 +134,7 @@ var QueryBuilder = function($el, options) {
     this.status.id = this.$el.attr('id');
 
     // INIT
-    this.$el.addClass('query-builder form-inline');
+    this.$el.addClass('query-builder');
 
     this.filters = this.checkFilters(this.filters);
     this.operators = this.checkOperators(this.operators);
